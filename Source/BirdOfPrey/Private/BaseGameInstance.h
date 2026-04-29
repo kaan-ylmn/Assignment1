@@ -1,10 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "BaseGameInstance.generated.h"
+
+class AActor;
+class USkeletalMesh;
+class UAnimInstance;
+class UTexture2D;
 
 USTRUCT(BlueprintType)
 struct FSAgentInfo
@@ -12,39 +15,34 @@ struct FSAgentInfo
     GENERATED_BODY()
 
 public:
-    UPROPERTY(BlueprintReadWrite, Category = "BirdOfPrey")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
     FText Name;
 
-    UPROPERTY(BlueprintReadWrite, Category = "BirdOfPrey")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
     TSubclassOf<AActor> BaseWeaponType;
 
-    UPROPERTY(BlueprintReadWrite, Category = "BirdOfPrey")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
     USkeletalMesh* SkeletalMesh;
 
-    UPROPERTY(BlueprintReadWrite, Category = "BirdOfPrey")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
     UAnimInstance* AnimInstance;
 
-    UPROPERTY(BlueprintReadWrite, Category = "BirdOfPrey")
-    UTexture2D* Image;    
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
+    UTexture2D* Image;
 };
 
-/**
- * 
- */
 UCLASS()
 class UBaseGameInstance : public UGameInstance
 {
     GENERATED_BODY()
 
 public:
-
-    UPROPERTY(BlueprintReadWrite, Category = "BirdOfPrey")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BirdOfPrey")
     TArray<FSAgentInfo> PlayerAgentInfo;
 
     UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-    void SetPlayerAgentInfoFor(int PlayerControllerID, FSAgentInfo& info);
+    void SetPlayerAgentInfoFor(int32 PlayerControllerID, UPARAM(ref) FSAgentInfo& Info);
 
     UFUNCTION(BlueprintCallable, Category = "BirdOfPrey")
-    FSAgentInfo& GetPlayerAgentInfoFor(int PlayerControllerID, bool &Result);
-	
+    FSAgentInfo GetPlayerAgentInfoFor(int32 PlayerControllerID, bool& Result);
 };
