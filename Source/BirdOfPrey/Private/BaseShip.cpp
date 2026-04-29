@@ -1,7 +1,8 @@
 #include "BaseShip.h"
 #include "GameFramework/FloatingPawnMovement.h"
-#include "Components/StaticMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SceneComponent.h"
 
 ABaseShip::ABaseShip()
 {
@@ -10,10 +11,13 @@ ABaseShip::ABaseShip()
 	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionCapsule"));
 	RootComponent = CollisionCapsule;
 
-	ShipMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
+	ShipMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
 	ShipMesh->SetupAttachment(RootComponent);
 
-	ShipMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("ShipMovement"));
+	WeaponSpawnOffset = CreateDefaultSubobject<USceneComponent>(TEXT("WeaponSpawnOffset"));
+	WeaponSpawnOffset->SetupAttachment(ShipMesh);
+
+	ShipMovement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("FloatingPawnMovement"));
 }
 
 void ABaseShip::BeginPlay()
@@ -29,4 +33,8 @@ void ABaseShip::Tick(float DeltaTime)
 void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void ABaseShip::Reset()
+{
 }
