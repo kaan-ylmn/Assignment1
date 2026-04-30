@@ -7,6 +7,5 @@ void ABaseEnemyShip::Move()
 
 void ABaseEnemyShip::Reset()
 {
-	
 	Super::Reset();
 }
